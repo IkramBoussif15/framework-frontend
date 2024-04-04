@@ -1,0 +1,644 @@
+<div class="p-col-12 p-md-12">
+    <div class="card">
+        <p-toast key="tst"></p-toast>
+
+        <h5>Configuration</h5>
+        <p-steps [model]="stepsItems" [activeIndex]="activeIndex" [readonly]="false"></p-steps>
+        <br>
+        <div style="margin-right: 0%;">
+            <button *ngIf="activeIndex==0" (click)="scanEntities()" pButton pRipple type="button" label="Scan entities"
+                class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+            <button *ngIf="activeIndex==1" (click)="scanServices()" pButton pRipple type="button" label="Scan services"
+                class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+            <button *ngIf="activeIndex==2" (click)="scanComposants()" pButton pRipple type="button"
+                label="Scan composants" class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+            <button *ngIf="activeIndex==3" (click)="scanMenus()" pButton pRipple type="button" label="Scan menus"
+                class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+            <button *ngIf="activeIndex==4" (click)="updateEntity()" pButton pRipple type="button"
+                label="Update Composants and fields" class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+<!-- addd melek Test -->
+
+                <button *ngIf="activeIndex==6" (click)="getNotificationTeste()" pButton pRipple type="button"
+                label="Get Notification Test" class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+
+
+
+            <input *ngIf="activeIndex==5" id="float-input" type="date" pInputText [(ngModel)]="dateAuj"> &nbsp;&nbsp;
+            <button *ngIf="activeIndex==5" (click)="generateHistory()" pButton pRipple type="button"
+                label="Generate History Task By Prefile" class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+
+
+
+                <p-steps [model]="stepsItems1" [activeIndex]="activeIndex1" [readonly]="false"></p-steps>
+
+                <button *ngIf="activeIndex1==0" (click)="scanDtos()" pButton pRipple type="button"
+                label="Scan Dto" class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+
+                <button *ngIf="activeIndex1==1" (click)="scanMethods()" pButton pRipple type="button"
+                label="Scan Methods" class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+
+                <button *ngIf="activeIndex1==2" (click)="ScanComposantDashboard()" pButton pRipple type="button"
+                label="Scan ComposantDashboard" class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+
+                <button *ngIf="activeIndex1==3" (click)="getAccref()" pButton pRipple type="button"
+                label="getAccref" class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+
+                <button *ngIf="activeIndex1==4" (click)="genICompta()" pButton pRipple type="button"
+                label="genICompta" class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+        </div>
+    </div>
+    <br>
+
+
+
+    <div class="card" *ngIf="activeIndex==0">
+        <h5>Scan Entities</h5>
+
+
+        <p-table #dtc [value]="entitiesScanned" dataKey="id" selectionMode="single"
+            styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped p-datatable-sm"
+            [scrollable]="true" scrollHeight="600px" [filterDelay]="0" [rows]="10" [paginator]="true"
+            [globalFilterFields]="['name','packageEntitiesBusiness','canonicalName','descEntitieBisness']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    Entities
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" 
+                            placeholder="Search Entities" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="packageEntitiesBusiness">PackageEntitiesBusiness
+                        <p-sortIcon field="packageEntitiesBusiness"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="canonicalName">CanonicalName
+                        <p-sortIcon field="canonicalName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="descEntitieBisness">DescEntitieBisness
+                        <p-sortIcon field="descEntitieBisness"></p-sortIcon>
+                    </th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-entity>
+                <tr [pSelectableRow]="entity">
+                    <td>
+                        {{entity.name}}
+                    </td>
+                    <td>
+                        {{entity.packageEntitiesBusiness}}
+                    </td>
+
+                    <td>
+                        {{entity.canonicalName}}
+                    </td>
+                    <td>
+                        {{entity.descEntitieBisness}}
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">pas d'entités scannées.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+
+    <div class="card" *ngIf="activeIndex==1">
+        <h5>Scan Services</h5>
+
+
+        <p-table #dtc [value]="servicesScanned" dataKey="id" selectionMode="single"
+            styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped p-datatable-sm"
+            [scrollable]="true" scrollHeight="600px" [filterDelay]="0" [rows]="10" [paginator]="true"
+            [globalFilterFields]="['name','classNameServices','packageServices','urlService','desc1']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    Services
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" 
+                            placeholder="Search Services" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="classNameServices">ClassNameServices
+                        <p-sortIcon field="classNameServices"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="packageServices">PackageServices
+                        <p-sortIcon field="packageServices"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="urlService">UrlService
+                        <p-sortIcon field="urlService"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="desc1">Desc1
+                        <p-sortIcon field="desc1"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-service>
+                <tr [pSelectableRow]="service">
+                    <td>
+                        {{service.name}}
+                    </td>
+                    <td>
+                        {{service.classNameServices}}
+                    </td>
+
+                    <td>
+                        {{service.packageServices}}
+                    </td>
+                    <td>
+                        {{service.urlService}}
+                    </td>
+                    <td>
+                        {{service.desc1}}
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">pas de services scannées.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+
+    <div class="card" *ngIf="activeIndex==2">
+        <h5>Scan Composants</h5>
+
+
+        <p-table #dtc [value]="composantsScanned" dataKey="id" selectionMode="single"
+            styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped p-datatable-sm"
+            [scrollable]="true" scrollHeight="600px" [filterDelay]="0" [rows]="10" [paginator]="true"
+            [globalFilterFields]="['name','keyComposant','ordreComposant','iconComposant','positionXComposant','positionYComposant','descComposant1','descComposant2','urlService','selectedComposantLinked']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    Composants
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" 
+                            placeholder="Search Composants" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="keyComposant">KeyComposant
+                        <p-sortIcon field="keyComposant"></p-sortIcon>
+                    </th>
+                    <!-- <th pSortableColumn="ordreComposant">OrdreComposant
+                        <p-sortIcon field="ordreComposant"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="iconComposant">IconComposant
+                        <p-sortIcon field="iconComposant"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="positionXComposant">PositionXComposant
+                        <p-sortIcon field="positionXComposant"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="positionYComposant">PositionYComposant
+                        <p-sortIcon field="positionYComposant"></p-sortIcon>
+                    </th> -->
+                    <th pSortableColumn="descComposant1">DescComposant1
+                        <p-sortIcon field="descComposant1"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="descComposant2">DescComposant2
+                        <p-sortIcon field="descComposant2"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="urlService">UrlService
+                        <p-sortIcon field="urlService"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="selectedComposantLinked">SelectedComposantLinked
+                        <p-sortIcon field="selectedComposantLinked"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-composant>
+                <tr [pSelectableRow]="composant">
+                    <td>
+                        {{composant.name}}
+                    </td>
+                    <td>
+                        {{composant.keyComposant}}
+                    </td>
+                    <!-- <td>
+                        {{composant.ordreComposant}}
+                    </td>
+                    <td>
+                        {{composant.iconComposant}}
+                    </td>
+                    <td>
+                        {{composant.positionXComposant}}
+                    </td>
+                    <td>
+                        {{composant.positionYComposant}}
+                    </td> -->
+
+
+                    <td>
+                        {{composant.descComposant1}}
+                    </td>
+                    <td>
+                        {{composant.descComposant2}}
+                    </td>
+                    <td>
+                        {{composant.urlService}}
+                    </td>
+                    <td>
+                        {{composant.selectedComposantLinked}}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">pas de composants scannées.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+
+    <div class="card" *ngIf="activeIndex==3">
+        <h5>Scan Menus</h5>
+
+
+        <p-table #dtc [value]="menusScanned" dataKey="id" selectionMode="single"
+            styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped p-datatable-sm"
+            [scrollable]="true" scrollHeight="600px" [filterDelay]="0" [rows]="10" [paginator]="true"
+            [globalFilterFields]="['name','codeMenu','pageMenu','descMenu','racineMenu']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    Menus
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" 
+                            placeholder="Search Menu" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="codeMenu">CodeMenu
+                        <p-sortIcon field="codeMenu"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="pageMenu">pageMenu
+                        <p-sortIcon field="pageMenu"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="descMenu">DescMenu
+                        <p-sortIcon field="descMenu"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="racineMenu">RacineMenu
+                        <p-sortIcon field="racineMenu"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-menu>
+                <tr [pSelectableRow]="menu">
+                    <td>
+                        {{menu.name}}
+                    </td>
+                    <td>
+                        {{menu.codeMenu}}
+                    </td>
+
+                    <td>
+                        {{menu.pageMenu}}
+                    </td>
+                    <td>
+                        {{menu.descMenu}}
+                    </td>
+                    <td>
+                        {{menu.racineMenu}}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">pas de menu scannées.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="card" *ngIf="activeIndex1==0">
+        <h5>Scan Dtos</h5>
+
+
+        <p-table #dtc [value]="dtosScanned" dataKey="id" selectionMode="single"
+            styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped p-datatable-sm"
+            [scrollable]="true" scrollHeight="600px" [filterDelay]="0" [rows]="10" [paginator]="true"
+            [globalFilterFields]="['name','packageEntitiesBusiness','canonicalName','descEntitieBisness']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    Dtos
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" 
+                            placeholder="Search Dtos" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="packageEntitiesBusiness">PackageEntitiesBusiness
+                        <p-sortIcon field="packageEntitiesBusiness"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="canonicalName">CanonicalName
+                        <p-sortIcon field="canonicalName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="descEntitieBisness">DescEntitieBisness
+                        <p-sortIcon field="descEntitieBisness"></p-sortIcon>
+                    </th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-dtos>
+                <tr [pSelectableRow]="dtos">
+                    <td>
+                        {{dtos.name}}
+                    </td>
+                    <td>
+                        {{dtos.packageEntitiesBusiness}}
+                    </td>
+
+                    <td>
+                        {{dtos.canonicalName}}
+                    </td>
+                    <td>
+                        {{dtos.descEntitieBisness}}
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">pas de dtos scannées.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="card" *ngIf="activeIndex1==1">
+        <h5>Scan methods</h5>
+
+
+        <p-table #dtc [value]="methodsScanned" dataKey="id" selectionMode="single"
+            styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped p-datatable-sm"
+            [scrollable]="true" scrollHeight="600px" [filterDelay]="0" [rows]="10" [paginator]="true"
+            [globalFilterFields]="['name','classNameMethods','packageMethods','urlMethods','etatBD','desc','nameEntity','identifier','methodKey']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    methods
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" 
+                            placeholder="Search methods" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="classNameMethods">ClassNameMethods
+                        <p-sortIcon field="classNameMethods"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="packageMethods">PackageMethods
+                        <p-sortIcon field="packageMethods"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="urlMethods">UrlMethods
+                        <p-sortIcon field="urlMethods"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="etatBD">EtatBD
+                        <p-sortIcon field="etatBD"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="desc">Desc
+                        <p-sortIcon field="desc"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nameEntity">NameEntity
+                        <p-sortIcon field="nameEntity"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="identifier">Identifier
+                        <p-sortIcon field="identifier"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="methodKey">MethodKey
+                        <p-sortIcon field="methodKey"></p-sortIcon>
+                    </th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-methods>
+                <tr [pSelectableRow]="methods">
+                    <td>
+                        {{methods.name}}
+                    </td>
+                    <td>
+                        {{methods.classNameMethods}}
+                    </td>
+
+                    <td>
+                        {{methods.urlMethods}}
+                    </td>
+                    <td>
+                        {{methods.etatBD}}
+                    </td>
+                    <td>
+                        {{methods.desc}}
+                    </td>
+                    <td>
+                        {{methods.nameEntity}}
+                    </td>
+                    <td>
+                        {{methods.identifier}}
+                    </td>
+                    <td>
+                        {{methods.methodKey}}
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">pas de methods scannées.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+    <div class="card" *ngIf="activeIndex1==2">
+        <h5>Scan ComposantDashboard</h5>
+
+
+        <p-table #dtc [value]="composantDashboardScanned" dataKey="id" selectionMode="single"
+            styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped p-datatable-sm"
+            [scrollable]="true" scrollHeight="600px" [filterDelay]="0" [rows]="10" [paginator]="true"
+            [globalFilterFields]="['name','keyComposant','labelComposant','ordreComposant','iconComposant','positionXComposant','positionYComposant','etatBD','descComposant1','descComposant2','urlService','selectedComposantLinked','nameEntity','nameService','identifier']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    ComposantDashboard
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" 
+                            placeholder="Search ComposantDashboard" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="keyComposant">keyComposant
+                        <p-sortIcon field="keyComposant"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="labelComposant">labelComposant
+                        <p-sortIcon field="labelComposant"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ordreComposant">ordreComposant
+                        <p-sortIcon field="ordreComposant"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="iconComposant">iconComposant
+                        <p-sortIcon field="iconComposant"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="positionXComposant">positionXComposant
+                        <p-sortIcon field="positionXComposant"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="positionYComposant">positionYComposant
+                        <p-sortIcon field="positionYComposant"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="etatBD">etatBD
+                        <p-sortIcon field="etatBD"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="descComposant1">descComposant1
+                        <p-sortIcon field="descComposant1"></p-sortIcon>
+                    </th>
+
+                    <th pSortableColumn="descComposant2">descComposant2
+                        <p-sortIcon field="descComposant2"></p-sortIcon>
+                    </th>
+
+                    <th pSortableColumn="urlService">urlService
+                        <p-sortIcon field="urlService"></p-sortIcon>
+                    </th>
+
+                    <th pSortableColumn="selectedComposantLinked">selectedComposantLinked
+                        <p-sortIcon field="selectedComposantLinked"></p-sortIcon>
+                    </th>
+
+                    <th pSortableColumn="nameEntity">nameEntity
+                        <p-sortIcon field="nameEntity"></p-sortIcon>
+                    </th>
+
+                    <th pSortableColumn="nameService">nameService
+                        <p-sortIcon field="nameService"></p-sortIcon>
+
+                    </th>
+                    <th pSortableColumn="identifier">identifier
+                        <p-sortIcon field="identifier"></p-sortIcon>
+                    </th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-ComposantDashboard>
+                <tr [pSelectableRow]="ComposantDashboard">
+                    <td>
+                        {{methods.name}}
+                    </td>
+                    <td>
+                        {{methods.keyComposant}}
+                    </td>
+
+                    <td>
+                        {{methods.labelComposant}}
+                    </td>
+                    <td>
+                        {{methods.ordreComposant}}
+                    </td>
+                    <td>
+                        {{methods.iconComposant}}
+                    </td>
+                    <td>
+                        {{methods.positionXComposant}}
+                    </td>
+                    <td>
+                        {{methods.positionYComposant}}
+                    </td>
+                    <td>
+                        {{methods.etatBD}}
+                    </td>
+                    <td>
+                        {{methods.descComposant1}}
+                    </td>
+                    <td>
+                        {{methods.descComposant2}}
+                    </td>
+                    <td>
+                        {{methods.urlService}}
+                    </td>
+                    <td>
+                        {{methods.selectedComposantLinked}}
+                    </td>
+                    <td>
+                        {{methods.nameEntity}}
+                    </td>
+                    <td>
+                        {{methods.nameService}}
+                    </td>
+                    <td>
+                        {{methods.identifier}}
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">pas de ComposantDashboard scannées.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+
+
+</div>
+
+<p-dialog [closable]="false" [(visible)]="display" modal="modal" showEffect="fade" [style]="{width: '400px'}">
+    <div style="line-height: 1.5; text-align: center;">
+        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8"
+            fill="#EEEEEE" animationDuration=".5s">
+
+        </p-progressSpinner>
+    </div>
+
+</p-dialog>

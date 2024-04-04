@@ -1,0 +1,519 @@
+<p-toast key="tst"></p-toast>
+
+<div class="p-col-12">
+    <div *ngIf="criteriaSearchPanel!=null">
+        <form *ngIf="criteriaSearchPanel!=null" [formGroup]="searchForm">
+            <p-panel header="{{criteriaSearchPanel.panelTraduction}}" [toggleable]="true" [collapsed]="expanded"
+                (onBeforeToggle)="onBeforeToggle()">
+                <div>
+                    <div style="position: relative; float: left;" *ngIf="criteriaSearchPanel.buttons!=null">
+                        <div *ngFor="let btn of criteriaSearchPanel.buttons">
+                            <div *ngIf="btn.libellebtn.includes('Alta')==true && provisionView==false &&  !isItHolderSpecification"
+                                class="button-row">
+
+                                <button [style]="{'background-color':'limegreen'}" pButton pRipple type="button"
+                                    label=" {{btn.libellebtn===null?'button':btn.libellebtn}}
+                            {{criteriaSearchPanel.panelTraduction.substr(criteriaSearchPanel.titlePanel.indexOf(' ')+1)}}" class="p-button-rounded p-button-warning p-mr-2 p-mb-2"
+                                    icon="pi pi-bookmark" type="{{btn.typebtn===null ? 'submit':btn.typebtn}}"
+                                    (click)="btn.libellebtn.includes('Alta')?createNewEntity(btn.urlactionbtn):searchEntity(btn.urlactionbtn , field)"></button>
+                                <button *ngIf="searchOperateurCloserr" [style]="{'background-color':'#ecf3fa'}" pButton
+                                    pRipple type="button" class="p-button-rounded p-button p-mr-2 p-mb-2"
+                                    icon="pi pi-filter" (click)="searchOperateur()"></button>
+                                <button *ngIf="!searchOperateurCloserr" [style]="{'background-color':'#ecf3fa'}" pButton
+                                    pRipple type="button" class="p-button-rounded p-button p-mr-2 p-mb-2"
+                                    icon="pi pi-filter" (click)="searchOperateur()"></button>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class=" d-flex justify-content-end  " *ngIf="criteriaSearchPanel.buttons!=null">
+                        <div *ngFor="let btn of criteriaSearchPanel.buttons">
+
+                            <div *ngIf="btn.libellebtn.includes('Alta')==false " class="button-row">
+
+                                <button pButton pRipple type="button"
+                                    label=" {{btn.libellebtn===null?'button':btn.libellebtn}}
+                            {{criteriaSearchPanel.panelTraduction.substr(criteriaSearchPanel.titlePanel.indexOf(' ')+1)}}"
+                                    class="p-button-rounded p-button-warning p-mr-2 p-mb-2" icon="pi pi-search"
+                                    type="{{btn.typebtn===null ? 'submit':btn.typebtn}}"
+                                    (click)="btn.libellebtn.includes('Alta')?createNewEntity(btn.urlactionbtn):searchEntity(btn.urlactionbtn)"></button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="criteriaSearchPanel.sections!=null">
+                    <div *ngFor=" let sectionFiled of criteriaSearchPanel.sections">
+                        <div *ngIf="!sectionFiled.isNotVisible">
+                            <br>
+                            <br>
+                            <p-fieldset legend="{{sectionFiled.name}}" toggleable="false"
+                                [style]="{ 'background-color': sectionFiled.backGroundColor }">
+
+                                <div *ngIf="criteriaSearchPanel.fields!=null   " class="p-fluid p-formgrid
+                   p-grid">
+                                    <ng-container *ngFor="let field of criteriaSearchPanel.fields ;let i=index">
+                                        <ng-container *ngIf="field.fieldSectionDto !=  null ;">
+
+                                            <div *ngIf="field.fieldSectionDto.id == sectionFiled.id"
+                                                class="p-col-12 p-md-{{y}}">
+
+
+                                                <label *ngIf="searchOperateurCloserr==false "
+                                                    for="{{field.fieldLabel}}">{{field.fieldLabel}}
+
+
+                                                </label>
+
+
+                                                <div class=" row" *ngIf="searchOperateurCloserr==true ">
+
+
+                                                    <p-dropdown class="col-4"
+                                                        *ngIf="field.fieldtype != 'search' && field.fieldtype != 'boolean'  && field.fieldtype != 'enumeration'  "
+                                                        [options]="cities"
+                                                        [style]="{'background':'#f5f8fd','width':'70px'}"
+                                                        [dropdownIcon]=""
+                                                        (onChange)="getOperateur($event , field.fieldKey)"></p-dropdown>
+
+
+                                                    <br>
+
+
+                                                    <label for="{{field.fieldLabel}}">{{field.fieldLabel}}
+
+
+                                                    </label>
+                                                    <br>
+                                                    <br>
+                                                </div>
+
+                                                <div [ngSwitch]="field.fieldtype">
+                                                    <div *ngSwitchCase="'select'">
+                                                        <!-- <div *ngIf="field.fieldMultiple==true ;else selectBlock">
+                                                            <p-multiSelect [options]="field.fieldDataForeignKey"
+                                                                formControlName="{{field.fieldKey}}"
+                                                                placeholder="{{field.fieldPlaceholder}}"
+                                                                optionLabel="name" class="multiselect-custom">
+                                                                <p-header>
+                                                                    <button label="Search"
+                                                                        (click)="searchSelectedInput(field,i)" pButton
+                                                                        pRipple type="button" icon="pi pi-search"
+                                                                        class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+                                                                </p-header>
+                                                            </p-multiSelect>
+                                                        </div> -->
+                                                        <div *ngIf="field.fieldMultiple==true ;else selectBlock">
+                                                            <p-multiSelect [options]="field.fieldDataForeignKey"
+                                                                formControlName="{{field.fieldKey}}"
+                                                                placeholder="{{field.fieldPlaceholder}}"
+                                                                optionLabel="dataSelectView" class="multiselect-custom">
+                                                                <p-header>
+                                                                    <button label="Search"
+                                                                        (click)="searchSelectedInput(field,i)" pButton
+                                                                        pRipple type="button" icon="pi pi-search"
+                                                                        class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+                                                                </p-header>
+                                                            </p-multiSelect>
+                                                        </div>
+
+                                                        <ng-template #selectBlock>
+                                                            <p-dropdown [filter]="true"
+                                                                [options]="field.fieldDataForeignKey" optionLabel="name"
+                                                                placeholder="{{field.fieldPlaceholder}}"
+                                                                formControlName="{{field.fieldKey}}" [showClear]="true">
+
+                                                            </p-dropdown>
+
+
+                                                        </ng-template>
+
+                                                    </div>
+                                                    <div *ngSwitchCase="'enumeration'">
+                                                        <p-dropdown [options]="field.fieldDataForeignKey"
+                                                            formControlName="{{field.fieldKey}}" [showClear]="true"
+                                                            [filter]="true" placeholder="{{field.fieldPlaceholder}}">
+
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div *ngSwitchCase="'boolean'">
+                                                        <div class="p-field-checkbox">
+                                                            <p-checkbox formControlName="{{field.fieldKey}}"
+                                                                binary="true" inputId="binary">
+                                                            </p-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngSwitchCase="'search'">
+
+                                                        <button label="Search" (click)="searchSelectedInput(field,i)"
+                                                            pButton pRipple type="button" icon="pi pi-search"
+                                                            class="colorButton"></button>
+                                                    </div>
+                                                    <div *ngSwitchCase="'localDateTime'">
+                                                        <input id="float-input" type="text" type="datetime-local"
+                                                            formControlName="{{field.fieldKey}}" pInputText>
+                                                    </div>
+                                                    <div *ngSwitchCase="'date'">
+
+
+                                                        <div *ngFor="let i of  tabOp1">
+                                                            <div *ngIf="  field.fieldKey==i  ">
+                                                                <p-calendar formControlName="{{field.fieldKey}}"
+                                                                    dateFormat="yy/mm/dd" selectionMode="multiple"
+                                                                    inputId="multiple" dataType="string"
+                                                                    showButtonBar="true" [showIcon]="true"
+                                                                    styleCalss=".p-calendar-w-btn .p-datepicker-trigger"></p-calendar>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div
+                                                            *ngIf="  field.fieldKey!=i &&  notClicked(field.fieldKey) ">
+                                                            <input id="float-input" type="text"
+                                                                type="{{field.fieldtype===null? 'text':field.fieldtype}}"
+                                                                [attr.disabled]="isdisabled(field)
+                                                ? true : null" formControlName="{{field.fieldKey}}" pInputText><br>
+
+                                                        </div>
+
+
+                                                        <div *ngFor="let i of  tabOp">
+                                                            <div *ngIf="  field.fieldKey==i  ">
+                                                                <p-calendar formControlName="{{field.fieldKey}}"
+                                                                    selectionMode="range" dateFormat="yy/mm/dd"
+                                                                    dataType="string" showButtonBar="true"
+                                                                    [showIcon]="true"
+                                                                    styleCalss=".p-calendar-w-btn .p-datepicker-trigger">
+                                                                </p-calendar>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div *ngSwitchCase="'number'">
+
+                                                        <input id="float-input" type="text"
+                                                            type="{{field.fieldtype===null? 'text':field.fieldtype}}"
+                                                            [attr.disabled]="isdisabled(field)
+                                            ? true : null" formControlName="{{field.fieldKey}}" pInputText><br>
+
+
+                                                        <div *ngFor="let i of  tabOp">
+                                                            <div *ngIf="op == true &&  field.fieldKey==i">
+                                                                <p>to </p>
+                                                                <input id="float-input" type="text"
+                                                                    type="{{field.fieldtype===null? 'text':field.fieldtype}}"
+                                                                    [attr.disabled]="isdisabled(field)
+                                            ? true : null" formControlName="{{field.fieldKey}}" pInputText>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div *ngSwitchCase="'doubleAmount'">
+
+                                                        <input id="float-input" type="text" [attr.disabled]="isdisabled(field) ?
+                                            true : null" formControlName="{{field.fieldKey}}" pInputText
+                                                            (change)="onNameChange($event,field);"
+                                                            (ngModelChange)="field.fieldValue=$event"
+                                                            value="{{field.fieldValue}}" class="success">
+                                                    </div>
+
+
+                                                    <div *ngSwitchDefault>
+
+                                                            <input id="float-input" type="text" [attr.disabled]="isdisabled(field) ?
+                                            true : null" formControlName="{{field.fieldKey}}" pInputText
+                                                                (change)="onNameChange($event,field);"
+                                                                (ngModelChange)="field.fieldValue=$event"
+                                                                value="{{field.fieldValue}}" class="success"
+                                                                [required]="field.isMandatory">
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+
+                                </div>
+
+                            </p-fieldset>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div *ngIf="criteriaSearchPanel.fields!=null" class="p-fluid p-formgrid p-grid">
+
+                    <div *ngFor="let field of fieldsWithoutSection; let i=index" class="p-field p-col-12 p-md-{{y}}">
+                        <div *ngIf="field.fieldSectionDto == null ">
+
+
+                            <label *ngIf="searchOperateurCloserr==false "
+                                for="{{field.fieldLabel}}">{{field.fieldLabel}}
+
+
+                            </label>
+
+
+                            <div class=" row" *ngIf="searchOperateurCloserr==true ">
+
+
+                                <p-dropdown class="col-4"
+                                    *ngIf="field.fieldtype != 'search' && field.fieldtype != 'boolean'  && field.fieldtype != 'enumeration'  "
+                                    [options]="cities" [style]="{'background':'#f5f8fd','width':'70px'}"
+                                    [dropdownIcon]="" (onChange)="getOperateur($event , field.fieldKey)"></p-dropdown>
+
+
+                                <br>
+
+
+                                <label class="col-8" for="{{field.fieldLabel}}">{{field.fieldLabel}}
+
+
+                                </label>
+                                <br>
+                                <br>
+                            </div>
+                            <!-- this block -->
+                            <div [ngSwitch]="field.fieldtype">
+                                <div *ngSwitchCase="'select'">
+                                    <div *ngIf="field.fieldMultiple==true ;else selectBlock">
+                                        <p-multiSelect [options]="field.fieldDataForeignKey"
+                                            formControlName="{{field.fieldKey}}"
+                                            placeholder="{{field.fieldPlaceholder}}" optionLabel="dataSelectView"
+                                            class="multiselect-custom">
+                                            <p-header>
+                                                <button label="Search" (click)="searchSelectedInput(field,i)" pButton
+                                                    pRipple type="button" icon="pi pi-search"
+                                                    class="p-button-rounded p-button-info p-mr-2 p-mb-2"></button>
+                                            </p-header>
+                                        </p-multiSelect>
+                                    </div>
+
+                                    <ng-template #selectBlock>
+                                        <p-dropdown [filter]="true" [options]="field.fieldDataForeignKey"
+                                            optionLabel="name" placeholder="{{field.fieldPlaceholder}}"
+                                            formControlName="{{field.fieldKey}}" [showClear]="true">
+
+                                        </p-dropdown>
+
+
+                                    </ng-template>
+
+                                </div>
+                                <div *ngSwitchCase="'enumeration'">
+                                    <p-dropdown [options]="field.fieldDataForeignKey"
+                                        formControlName="{{field.fieldKey}}" [showClear]="true" [filter]="true"
+                                        placeholder="{{field.fieldPlaceholder}}">
+
+                                    </p-dropdown>
+                                </div>
+                                <div *ngSwitchCase="'boolean'">
+                                    <div class="p-field-checkbox">
+                                        <p-checkbox formControlName="{{field.fieldKey}}" binary="true" inputId="binary">
+                                        </p-checkbox>
+                                    </div>
+                                </div>
+
+                                <div *ngSwitchCase="'search'">
+                                    <div>
+                                        <p-header>
+                                            <button label="Search" (click)="searchSelectedInput(field,i)" pButton
+                                                pRipple type="button" icon="pi pi-search" class="colorButton"></button>
+                                        </p-header>
+
+
+                                    </div>
+                                </div>
+
+
+                                <div *ngSwitchCase="'localDateTime'">
+                                    <input id="float-input" type="text" type="datetime-local"
+                                        formControlName="{{field.fieldKey}}" pInputText>
+                                </div>
+                                <div *ngSwitchCase="'date'">
+
+
+                                    <div *ngFor="let i of  tabOp1">
+                                        <div *ngIf="  field.fieldKey==i  ">
+                                            <p-calendar formControlName="{{field.fieldKey}}" dateFormat="yy/mm/dd"
+                                                selectionMode="multiple" inputId="multiple" dataType="string"
+                                                showButtonBar="true" [showIcon]="true"
+                                                styleCalss=".p-calendar-w-btn .p-datepicker-trigger"></p-calendar>
+                                        </div>
+                                    </div>
+
+
+                                    <div *ngIf="  field.fieldKey!=i &&  notClicked(field.fieldKey) ">
+                                        <input id="float-input" type="text"
+                                            type="{{field.fieldtype===null? 'text':field.fieldtype}}" [attr.disabled]="isdisabled(field)
+                                            ? true : null" formControlName="{{field.fieldKey}}" pInputText><br>
+
+                                    </div>
+
+
+                                    <div *ngFor="let i of  tabOp">
+                                        <div *ngIf="  field.fieldKey==i  ">
+                                            <p-calendar formControlName="{{field.fieldKey}}" selectionMode="range"
+                                                dateFormat="yy/mm/dd" dataType="string" showButtonBar="true"
+                                                [showIcon]="true" styleCalss=".p-calendar-w-btn .p-datepicker-trigger">
+                                            </p-calendar>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div *ngSwitchCase="'number'">
+
+                                    <input id="float-input" type="text"
+                                        type="{{field.fieldtype===null? 'text':field.fieldtype}}" [attr.disabled]="isdisabled(field)
+                                        ? true : null" formControlName="{{field.fieldKey}}" pInputText><br>
+
+
+                                    <div *ngFor="let i of  tabOp">
+                                        <div *ngIf="op == true &&  field.fieldKey==i">
+                                            <p>to </p>
+                                            <input id="float-input" type="text"
+                                                type="{{field.fieldtype===null? 'text':field.fieldtype}}"
+                                                [attr.disabled]="isdisabled(field)
+                                        ? true : null" formControlName="{{field.fieldKey}}" pInputText>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div *ngSwitchCase="'doubleAmount'">
+
+                                    <input id="float-input" type="text" [attr.disabled]="isdisabled(field) ?
+                                        true : null" formControlName="{{field.fieldKey}}" pInputText
+                                        (change)="onNameChange($event,field);" (ngModelChange)="field.fieldValue=$event"
+                                        value="{{field.fieldValue}}" class="success">
+                                </div>
+
+
+                                <div *ngSwitchDefault>
+                                    <div *ngIf="field.fieldname =='estimatedTotalNotary' ||
+                                field.fieldname == 'estimatedTotalRegister' ||
+                                field.fieldname == 'globalBalance' ||
+                                field.fieldname == 'estimatedTotalFiscal' ||
+                                field.fieldname == 'balanceToBeSettled' ||
+                                field.fieldname == 'estimatedTotalCommission' ||
+                                field.fieldname == 'totalestimatedourCommission' ||
+                                field.fieldname == 'estimatedProvsionNotary' ||
+                                field.fieldname == 'estimatedProvisionFiscalAuth' ||
+                                field.fieldname == 'estimatedProvisioDnRegister' ||
+                                field.fieldname == 'estimatedProvisonCommission' ||
+                                field.fieldname == 'estimatesProvisionOtherPayment' ||
+                                field.fieldname == 'declaredValue' ||
+                                field.fieldname == 'calculatedProvision' ||
+                                field.fieldname == 'paidAmount' ||
+                                field.fieldname == 'calculatedProvision' ||
+                                field.fieldname == 'paidAmount' ||
+                                field.fieldname == 'estimatedCommissionAmount' ||
+                                field.fieldname == 'totalExpenseAmount' ||
+                                field.fieldname == 'netAmount' ||
+                                field.fieldname == 'calculatedProvision' ||
+                                field.fieldname == 'paidAmountByHolder' ||
+                                field.fieldname == 'provisionByHolder' ||
+                                field.fieldname == 'balanceByHolder' ||
+                                field.fieldname == 'balanceToSettleByHolder' ||
+                                field.fieldname == 'settledAmountByHolder' ||
+
+                                field.fieldname == 'calculatedProvisionFiscal' ||
+                                field.fieldname == 'registerPaidAmount' ||
+                                field.fieldname == 'declaredValue' ||
+                                field.fieldname == 'provisionRegPayment1' ||
+                                field.fieldname == 'calculatedProvision' ||
+
+                                field.fieldname == 'paidAmount' ||
+
+                                field.fieldname == 'netAmount' ||
+                                field.fieldname == 'cancellationAmount' ||
+                                field.fieldname == 'otherAmount' ||
+                                field.fieldname == 'basicAmount' ||
+                                field.fieldname == 'fiscalAmount ' ||
+                                field.fieldname == 'retentionAmount'
+
+
+
+
+
+
+
+
+
+
+                                ;  else blocelse1 ">
+
+                                        <input id="float-input" type="text" [attr.disabled]="isdisabled(field) ?
+                                        true : null" formControlName="{{field.fieldKey}}" pInputText
+                                            (change)="onNameChange($event,field);"
+                                            (ngModelChange)="field.fieldValue=$event" value="{{field.fieldValue}}"
+                                            class="success" [required]="field.isMandatory">
+
+                                    </div>
+
+                                    <ng-template #blocelse1>
+                                        <div *ngIf="field.fieldname != 'incidenceCreator'">
+                                            <input id="float-input" type="text"
+                                                type="{{field.fieldtype===null? 'text':field.fieldtype}}"
+                                                [attr.disabled]="isdisabled(field)
+                                            ? true : null" formControlName="{{field.fieldKey}}" pInputText>
+                                        </div>
+
+                                        <div *ngIf="field.fieldname == 'incidenceCreator'">
+
+
+                                            <input id="float-input" type="text"
+                                                type="{{field.fieldtype===null? 'text':field.fieldtype}}"
+                                                [attr.disabled]="isdisabled(field)
+                                                        ? true : null" formControlName="{{field.fieldKey}}" pInputText
+                                                [ngModel]="field.fieldValue">
+                                        </div>
+
+                                    </ng-template>
+
+
+                                </div>
+
+                            </div>
+                            <!--                         </div>
+ -->
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </p-panel>
+        </form>
+    </div>
+</div>
+<!-- <app-resultsearch *ngIf="existResultSearch" [provisionView]="provisionView" [addButtonPrefile]="addButtonPrefile"
+    [dataTypeTransfer]='dataTypeTransfer' [transferSpecsResultSearch]='specsResultSearch'
+    (dataEventProvisionLine)="dataEventProvisionLineHandler($event)"
+    (isHolderScreenEmitEvent)="isHolderScreenEmitEventHandler($event)"
+    [isItHolderSpecification]="isItHolderSpecification">
+</app-resultsearch>
+
+<app-form-search-child *ngIf="existSelectedSearchView" [selectedSearchViewTransfer]="selectedSearchView"
+    (dataResultSearchSelected)="dataEventResultSearchSelected($event)" [dataResultAvecContext]="fieldAvecContext">
+</app-form-search-child> -->
+
+<p-dialog [closable]="false" [(visible)]="display" modal="modal" showEffect="fade" [style]="{width: '400px'}">
+    <div style="line-height: 1.5; text-align: center;">
+        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8"
+            fill="#EEEEEE" animationDuration=".5s">
+
+        </p-progressSpinner>
+    </div>
+
+</p-dialog>

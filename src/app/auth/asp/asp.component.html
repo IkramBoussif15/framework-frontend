@@ -1,0 +1,67 @@
+<div class="login-body">
+
+
+  <!-- <div class="container"> -->
+
+
+
+  <div class="p-grid" id="grid">
+
+
+    <!-- <div class="p-col-2">
+    </div> -->
+    <!-- <div class="p-col-8 embed-responsive embed-responsive-16by9">
+      <br>
+
+      <app-map></app-map>
+
+    </div> -->
+    <div class="p-col-2" style=" width:30% ;margin-left: 60%;margin-top:auto;">
+      <div>
+        <p-button label="Salir" id="logout" (click)="logout()" icon="pi pi-bookmark"></p-button>
+
+        <h5 class="labelAsp">Asp</h5>
+        <div class="p-fluid">
+          <div class="p-field">
+            <form [formGroup]="dynamicForm">
+              <div *ngIf="aspTypeAll!=null">
+                <div *ngFor="let aspTypeTranslate of aspTranslation ;let i=index">
+                  <label class="labelAsp">{{aspTypeTranslate.algebraTraduction}} </label>
+
+                  <br>
+                  <p-dropdown [showClear]="true" [options]="listAspChild[i]"
+                    (onChange)="onAspChangeRec(i+1,i,aspTypeTranslate.asptype)"
+                    [formControlName]="aspTypeTranslate.asptype.name" optionLabel="name" placeholder="Select option">
+                  </p-dropdown>
+                </div>
+                <br><br>
+                <div class="p-col-7">
+                  <div *ngIf="hasAsp=='true'">
+                    <button class="buttonDeseign" pButton pRipple type="button" label="Entrar"
+                      class="p-button-rounded p-mr-2 p-mb-2" (click)="submittedHasAsp()" icon="pi pi-bookmark"></button>
+                    <p-captcha data-type="image" siteKey={{keysite}} (onResponse)="showResponse($event)">
+                    </p-captcha>
+                  </div>
+
+                  <div *ngIf="hasAsp=='false'">
+
+
+
+                    <button pButton pRipple type="button" label="Entrar" class="p-button-rounded p-mr-2 p-mb-2"
+                      (click)="submittedNotHasAsp()" icon="pi pi-bookmark" style="width: auto;"></button>
+                  </div>
+
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="p-col-1">
+    </div> -->
+
+
+  </div>
+  <!-- </div> -->

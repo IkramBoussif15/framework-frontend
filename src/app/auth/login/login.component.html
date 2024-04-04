@@ -1,0 +1,115 @@
+
+
+<div class="login-body">
+
+    
+
+
+
+
+    <div class="p">
+    <div class="login-wrapper">
+        <div class="login-panel" style=" width:60% ;margin-left: auto;margin-top:auto;">
+           <div class="login" style="margin-top:-auto;">
+              <p class="para_" style="color:black;margin-left: auto;">New here?</p><p class="para" style="color:deeppink;">Sign Up</p><br>
+                <img class=img-responsive  width="120" height="100" style="margin-left: auto;" src="assets/layout/images/algebra_logo.png" alt="poseidon-layout" />
+           <br>
+                <p style="color:black;display:inline;font-size: 21px;"> Welcome to Algebra Systems</p>
+               <br><br> 
+                <form  [formGroup]="loginForm"  class="login-form" >
+                    <div class="form-group" >
+                <input style="width: auto; background-color : #d1d1d1;" type="text"  
+                autocomplete="off" pInputText placeholder="Email" formControlName="email">
+                <small class="p-invalid" *ngIf="isControlHasError('email','required')">
+                   Required Field!
+                </small><br>
+                <small class="p-invalid" *ngIf="isControlHasError('email','email')">
+                    Invalid email
+                </small>
+                <small class="p-invalid" *ngIf="isControlHasError('email','minlength')">
+                    longitud mínima 3
+                </small>
+                <small class="p-invalid" *ngIf="isControlHasError('email','maxlength')">
+                    max length field is 320
+                </small><br>
+            <small class="p-invalid" *ngIf="motdepasseinvalid==true" style="color: red;">
+                Usuario incorrecto
+            </small>
+            </div>
+            <br>
+
+            <div class="form-group" class="login-form" >
+                <input style="width: auto;background-color: #d1d1d1;" type="password" autocomplete="off" pInputText placeholder="Password"formControlName="password">
+                <small class="p-invalid" *ngIf="isControlHasError('password','required')">
+                    Required Field!
+                </small><br>
+                <small class="p-invalid" *ngIf="isControlHasError('password','minlength')">
+                    longitud mínima 3
+                </small>
+                <small class="p-invalid" *ngIf="isControlHasError('password','maxlength')">
+                    max length field is 100
+                </small>
+            <small class="p-invalid" *ngIf="motdepasseinvalid==true" style="color: red;" >
+                Contraseña incorrecta
+            </small>
+            </div>
+            <div class="form-group" *ngIf="existSecretCode!=null && existSecretCode==true" >
+				
+					<input pInputText type="text" style="width: 325px;background-color: #d1d1d1;" placeholder="Secret code" formControlName="code" autocomplete="off"/>
+				
+            </div>
+            <small class="p-invalid" *ngIf="messageErreur==true">
+				{{message}}             
+
+			</small><br>
+            <div >
+				<a class="a_" href="javascript:;" routerLink="#"  >
+					<strong style="width: auto; height: auto;">Olvidaste tu contraseña?</strong>
+				</a>
+				</div>
+            
+            <div class="b_">
+            <p-button class="b_" (click)="submit()" type="button" label="Confirmar" ></p-button>
+        </div>
+        <div >
+			<div  >
+				<span class="or_"><Strong>OR</Strong></span>
+				
+			</div>
+		</div>
+		<!--end::Divider-->
+
+        <!--begin::Options-->
+        <br>
+		<div style="margin-left:auto" >
+			
+            <a  href="https://www.facebook.com/keenthemes/" class="logo">
+                <img  class=img-responsive width="60" height="75"   src="assets/layout/images/linkedin_logo.png" alt="poseidon-layout" />
+            </a>
+            <a href="#" class="logo">
+                <img class=img-responsive   width="40" height="5px" src="assets/layout/images/google_logo.png" alt="poseidon-layout" />
+           
+			</a>
+			<a href="https://twitter.com/keenthemes/" class="logo">
+                <img class=img-responsive  width="60" height="75"  src="assets/layout/images/twitter_logo.png" alt="poseidon-layout" />
+            </a>
+            <br>
+
+          <img   class=img-responsive  style=" width: 25%; margin-top: auto; margin-left: auto;"
+                 src="assets/layout/images/gestinova_logo.png" alt="poseidon-layout" /> 
+        
+			
+		</div>
+        <!--end::Options-->  
+          
+        
+        </form>
+        
+        </div>
+           
+        </div>
+    
+    </div>
+</div>
+</div>
+

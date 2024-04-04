@@ -1,0 +1,103 @@
+.p-button-rounded .p-button-warning .p-mr-2 .p-mb-2{
+    margin-right: 0px;
+}
+
+.p-button.p-button-warning, .p-buttonset.p-button-warning > .p-button, .p-splitbutton.p-button-warning > .p-button  {
+  color: #237eca !important;
+  background: #ecf3fa !important;
+  border: 1px solid !important ;
+}
+
+/* Green */
+.success {
+  border-color: #689F38;
+  color: black;
+}
+
+::ng-deep  .p-calendar-w-btn .p-datepicker-trigger {
+  height: 40px;
+ 
+}
+
+::ng-deep .pi-filter{
+  color: #237eca;
+}
+
+
+
+.buttopnBlue{
+color: #237eca;
+    background: #ecf3fa;
+    border: 1px solid #0288D1;}
+
+    
+  .colorButton{
+    color: #237eca;
+    background: #f7fbff;
+    border-radius: 2rem;
+
+    border: 1px solid #ffffff;}
+
+    .colorButtonGolbal{
+      color: #237eca;
+      background: #f7fbff;
+      border-radius: 2rem;
+      border: 1px solid #0288D1;}
+
+      ::ng-deep .p-button.p-button-info, .p-buttonset.p-button-info > .p-button, .p-splitbutton.p-button-info > .p-button {
+        color: #1b5fab;
+        background: #ecf3fa;
+        border: 1px solid #1b5fab;
+    }
+
+    
+  .colorButton {
+    color: #237eca;
+    background: #f7fbff;
+    border-radius: 2rem;
+    border: 1px solid #ffffff;
+
+}
+.colorButton:enabled:hover{
+    color: #237eca;
+    background: #f7fbff;
+    border-radius: 2rem;
+    border: 1px solid #ffffff;
+
+}
+
+.colorButton:enabled:active  {
+    color: #237eca;
+    background: #f7fbff;
+    border-radius: 2rem;
+    border: 1px solid #ffffff;
+
+}
+
+::ng-deep legend {
+  width: 10%;
+  margin-top: -2%;
+  margin-left: 2%;
+  
+}
+::ng-deep .p-fieldset.p-fieldset-toggleable .p-fieldset-legend a .p-fieldset-toggler {
+  padding: 0.6rem;
+  position: absolute;
+  top: 50%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+
+}
+
+::ng-deep  .p-fieldset-legend-text {
+  font-size:small
+}
+
+
+
+::ng-deep  p-field.p-grid, .p-formgrid.p-grid {
+  margin-top: auto;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+}
+

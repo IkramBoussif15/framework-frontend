@@ -1,0 +1,32 @@
+// .center-div
+// {
+//   margin: 0 auto;
+//   width: 100px;
+//   height: 100px;
+//}
+.login-body {
+   background-image: url('../../../assets/layout/images/login.jpg');
+   background-repeat: no-repeat;
+       background-attachment: fixed;
+       background-size: 100% 100%;  
+  }
+  .p{
+    // margin-left: auto;
+     width:auto;
+  }
+ #logout{
+     margin-left: auto;
+    background: #1BC5BD;
+ }
+.labelAsp{
+   color : rgb(0, 0, 0)
+}
+.p-button {
+   color: #F8FAFC;
+   padding: 0.3rem 0.3rem;
+   font-size: 1rem;
+   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+   border-radius: 5px;
+   width:134%;
+}
+
